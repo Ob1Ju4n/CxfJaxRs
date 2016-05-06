@@ -1,1 +1,1 @@
-{"_id":1,"attachments":[],"bankId":ObjectId("564f7cc66d6d7500c5f5a107"),"details":[1,2,3],"payment":1335600,"total":1500000}
+{"_id":1,"attachments":[],"transfer_type":ObjectId("564f7cc66d6d7500c5f5a107"),"details":[1,2,3],"net_worth":1335600,"total":1500000, "creation_date":'10/25/2016'}
