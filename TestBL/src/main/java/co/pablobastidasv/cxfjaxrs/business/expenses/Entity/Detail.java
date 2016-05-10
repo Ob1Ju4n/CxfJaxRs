@@ -1,4 +1,4 @@
-package co.pablobastidasv.cxfjars.business.expenses.entity;
+package co.pablobastidasv.cxfjaxrs.business.expenses.entity;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package co.pablobastidasv.cxfjars.business.expenses.entity;
+package co.pablobastidasv.cxfjaxrs.business.expenses.entity;
 
 /**
  * Created by j.ortiz on 4/28/2016.

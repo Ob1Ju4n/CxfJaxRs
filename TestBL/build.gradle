@@ -20,6 +20,6 @@ jar{
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.data:spring-data-mongodb:1.9.1.RELEASE")
+    compile("org.springframework.data:spring-data-mongodb")
 }
 

@@ -1,4 +1,4 @@
-package co.pablobastidasv.cxfjars.boot;
+package co.pablobastidasv.cxfjaxrs.boot;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 public class MongoConfiguration extends AbstractMongoConfiguration {
 
-    private final static String DB_NAME = "cxfjars";
+    private final static String DB_NAME = "cxfjaxrs";
 
     @Override
     protected String getDatabaseName() {

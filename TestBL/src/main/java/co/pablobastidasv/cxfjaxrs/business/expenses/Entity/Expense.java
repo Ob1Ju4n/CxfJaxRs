@@ -1,4 +1,6 @@
-package co.pablobastidasv.cxfjars.business.expenses.entity;
+package co.pablobastidasv.cxfjaxrs.business.expenses.entity;
+
+import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
  */
 public class Expense {
 
+    @Id
     private String id;
     private TransferType transferType;
     private List<Detail> details;
