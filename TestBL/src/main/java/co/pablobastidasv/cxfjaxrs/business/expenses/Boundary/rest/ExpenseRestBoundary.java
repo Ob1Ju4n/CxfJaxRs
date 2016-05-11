@@ -1,6 +1,6 @@
 package co.pablobastidasv.cxfjaxrs.business.expenses.boundary.rest;
 
-import co.pablobastidasv.cxfjaxrs.business.expenses.control.ExpenseRepository;
+import co.pablobastidasv.cxfjaxrs.business.expenses.control.common.ExpenseRepository;
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Expense;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/expenses")
-public class ExpenseRestService {
+public class ExpenseRestBoundary {
 
     @Autowired
     private ExpenseRepository repository;

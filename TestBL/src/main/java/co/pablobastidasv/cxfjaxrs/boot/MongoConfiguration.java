@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * Created by j.ortiz on 5/4/2016.
  */
 @Configuration
-@EnableMongoRepositories
+@EnableMongoRepositories(basePackages = {"co.pablobastidasv.cxfjaxrs.business.expenses"})
 public class MongoConfiguration extends AbstractMongoConfiguration {
 
     private final static String DB_NAME = "cxfjaxrs";

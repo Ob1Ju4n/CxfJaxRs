@@ -15,72 +15,105 @@ import java.util.List;
 public class Expense {
 
     @Id
-    private String id;
-    private TransferType transferType;
-    private List<Detail> details;
-    private BigDecimal netWorth;
-    private BigDecimal total;
-    private Date creationDate;
+    private final String id;
+    private final TransferType transferType;
+    private final List<Detail> details;
+    private final BigDecimal netWorth;
+    private final BigDecimal total;
+    private final Date creationDate;
     //TODO: Include attachment property
 
-    public Expense(){
-        this.details = new ArrayList<>();
-        this.creationDate = new Date();
-    }
+    private Expense(Builder builder){
 
-    public Expense(TransferType transferType, List<Detail> details, BigDecimal netWorth, BigDecimal total) {
-        this();
-        this.transferType = transferType;
-        this.details.addAll(details);
-        this.netWorth = netWorth;
-        this.total = total;
+        id = builder.id;
+        transferType = builder.transferType;
+        details = builder.details;
+        netWorth = builder.netWorth;
+        total = builder.total;
+        creationDate = builder.creationDate;
+
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public TransferType getTransferType() {
         return transferType;
-    }
-
-    public void setTransferType(TransferType transferType) {
-        this.transferType = transferType;
     }
 
     public List<Detail> getDetails() {
         return details;
     }
 
-    public void setDetails(List<Detail> details) {
-        this.details = details;
-    }
-
     public BigDecimal getNetWorth() {
         return netWorth;
-    }
-
-    public void setNetWorth(BigDecimal netWorth) {
-        this.netWorth = netWorth;
     }
 
     public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
     public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public static class Builder{
+
+        private String id;
+        private TransferType transferType;
+        private List<Detail> details;
+        private BigDecimal netWorth;
+        private BigDecimal total;
+        private Date creationDate;
+
+        public Builder(){
+            this.id = null;
+            this.details = new ArrayList<>();
+            this.creationDate = new Date();
+        }
+
+        public Builder id(String value){
+
+            id = value;
+            return this;
+        }
+
+        public Builder transferType(TransferType value){
+
+            transferType = value;
+            return this;
+        }
+
+        public Builder details(List<Detail> valueList){
+
+            details = valueList;
+            return this;
+        }
+
+        public Builder netWorth(BigDecimal value){
+
+            netWorth = value;
+            return this;
+        }
+
+
+        public Builder total(BigDecimal value){
+
+            total = value;
+            return this;
+        }
+
+        public Builder creationDate(Date value){
+
+            creationDate = value;
+            return this;
+        }
+
+        public Expense build(){
+            return new Expense(this);
+        }
+
     }
+
 }

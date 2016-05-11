@@ -11,6 +11,11 @@ public class TransferType {
 
     public TransferType(){}
 
+    public TransferType(String transferCode, String transferName) {
+        this.transferCode = transferCode;
+        this.transferName = transferName;
+    }
+
     public String getId() {
         return id;
     }
