@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -62,28 +63,59 @@ public class ExpenseRestBoundaryTest {
     }
 
     @Test
-    public void shouldCreateExpense(){
+    public void systemTest(){
 
-        ResponseEntity<Expense> response = client.postForEntity(BASE_URL, e1, Expense.class, Collections.EMPTY_MAP);
-        Expense created = response.getBody();
-
-        assertThat(created, notNullValue());
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
-        assertThat(created.getCreationDate(), equalTo(e1.getCreationDate()));
+        shouldCreateExpenses(e1, e2);
+        shouldReturnExpenseWithGivenId(e1);
+        shouldReturnAllExpenses(2);
+        shouldDeleteExpenses(e1,e2);
 
     }
 
-    @Test
-    public void shouldReturnExpenseWithGivenId(){
+    private void shouldCreateExpenses(Expense... args){
 
-        ResponseEntity<Expense> response = client.getForEntity(BASE_URL + e1.getId(), Expense.class);
+        for(Expense expense: args){
+
+            ResponseEntity<Expense> response = client.postForEntity(BASE_URL, expense, Expense.class, Collections.EMPTY_MAP);
+            Expense created = response.getBody();
+
+            assertThat(created, notNullValue());
+            assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
+            assertThat(created.getCreationDate(), equalTo(e1.getCreationDate()));
+        }
+    }
+
+    public void shouldReturnExpenseWithGivenId(Expense expense){
+
+        ResponseEntity<Expense> response = client.getForEntity(BASE_URL + expense.getId(), Expense.class);
         Expense found = response.getBody();
 
         assertThat(found, notNullValue());
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-        assertThat(found.getId(), equalTo(e1.getId()));
+        assertThat(found.getId(), equalTo(expense.getId()));
+    }
 
+    public void shouldReturnAllExpenses(int total){
+
+        ResponseEntity<Expense[]> response = client.getForEntity(BASE_URL, Expense[].class);
+        List<Expense> found = Arrays.asList(response.getBody());
+
+        assertThat(found, notNullValue());
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+        assertThat(found.size(), equalTo(total));
     }
 
 
+    public void shouldDeleteExpenses(Expense... args){
+
+        for(Expense expense: args){
+
+            ResponseEntity<Expense> response = client.exchange(BASE_URL + expense.getId(), HttpMethod.DELETE, null, Expense.class);
+            Expense deleted = response.getBody();
+
+            assertThat(deleted, notNullValue());
+            assertThat(response.getStatusCode(), equalTo(HttpStatus.NO_CONTENT));
+            assertThat(client.getForEntity(BASE_URL + expense.getId(), Expense.class).getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
+        }
+    }
 }
