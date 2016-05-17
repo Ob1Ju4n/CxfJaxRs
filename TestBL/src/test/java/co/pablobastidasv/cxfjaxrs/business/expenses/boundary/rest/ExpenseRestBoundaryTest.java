@@ -1,16 +1,14 @@
-package co.pablobastidas.cxfjaxrs.business.expenses.boundary.rest;
+package co.pablobastidasv.cxfjaxrs.business.expenses.boundary.rest;
 
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Detail;
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Expense;
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.TransferType;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -19,16 +17,17 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
  * Created by j.ortiz on 5/10/2016.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 public class ExpenseRestBoundaryTest {
 
-    final String BASE_URL = "http://localhost:8080/api/expenses";
+    private int srvPort = 8080;
+    final String BASE_URL = "http://localhost:" + srvPort + "/api/expenses/";
     private RestTemplate client;
     private List<Detail> details;
     private Expense e1,e2;
@@ -81,7 +80,7 @@ public class ExpenseRestBoundaryTest {
 
             assertThat(created, notNullValue());
             assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
-            assertThat(created.getCreationDate(), equalTo(e1.getCreationDate()));
+            assertThat(created.getId(), equalTo(expense.getId()));
         }
     }
 
@@ -113,7 +112,7 @@ public class ExpenseRestBoundaryTest {
             ResponseEntity<Expense> response = client.exchange(BASE_URL + expense.getId(), HttpMethod.DELETE, null, Expense.class);
             Expense deleted = response.getBody();
 
-            assertThat(deleted, notNullValue());
+            assertThat(deleted, nullValue());
             assertThat(response.getStatusCode(), equalTo(HttpStatus.NO_CONTENT));
             assertThat(client.getForEntity(BASE_URL + expense.getId(), Expense.class).getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
         }

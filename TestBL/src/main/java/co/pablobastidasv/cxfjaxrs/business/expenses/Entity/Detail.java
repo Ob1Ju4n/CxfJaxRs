@@ -11,6 +11,8 @@ public class Detail {
     private String description;
     private BigDecimal value;
 
+    public Detail(){}
+
     public Detail(String description, BigDecimal value){
 
         this.description = description;

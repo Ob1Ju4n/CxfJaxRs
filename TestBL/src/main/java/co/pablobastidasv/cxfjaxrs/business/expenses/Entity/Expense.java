@@ -15,13 +15,15 @@ import java.util.List;
 public class Expense {
 
     @Id
-    private final String id;
-    private final TransferType transferType;
-    private final List<Detail> details;
-    private final BigDecimal netWorth;
-    private final BigDecimal total;
-    private final Date creationDate;
+    private String id;
+    private TransferType transferType;
+    private List<Detail> details;
+    private BigDecimal netWorth;
+    private BigDecimal total;
+    private Date creationDate;
     //TODO: Include attachment property
+
+    public Expense(){}
 
     private Expense(Builder builder){
 

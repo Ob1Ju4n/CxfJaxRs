@@ -29,7 +29,7 @@ public class ExpenseRestBoundary {
         List<Expense> expenses = repository.findAll();
 
         if (expenses.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(expenses, HttpStatus.OK);
@@ -41,7 +41,7 @@ public class ExpenseRestBoundary {
         Expense expense = repository.findOne(id);
 
         if(expense == null){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(expense, HttpStatus.OK);
