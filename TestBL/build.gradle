@@ -21,6 +21,8 @@ jar{
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.data:spring-data-mongodb")
+    compile("org.zkoss.zk:zkplus:8.0.0")
+    compile("org.zkoss.zk:zkspring-core:3.0")
     testCompile("org.springframework:spring-test:4.0.5.RELEASE")
 }
 

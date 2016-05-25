@@ -6,8 +6,10 @@ import co.pablobastidasv.cxfjaxrs.business.expenses.entity.TransferType;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -67,8 +69,8 @@ public class ExpenseRestBoundaryTest {
         shouldCreateExpenses(e1, e2);
         shouldReturnExpenseWithGivenId(e1);
         shouldReturnAllExpenses(2);
+        shouldUpdateExpense(BigDecimal.TEN);
         shouldDeleteExpenses(e1,e2);
-
     }
 
     private void shouldCreateExpenses(Expense... args){
@@ -102,6 +104,21 @@ public class ExpenseRestBoundaryTest {
         assertThat(found, notNullValue());
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
         assertThat(found.size(), equalTo(total));
+    }
+
+    public void shouldUpdateExpense(BigDecimal netWorth){
+
+        Expense expense = new Expense.Builder().
+                id("1").
+                netWorth(netWorth).
+                build();
+
+        HttpEntity<Expense> requestEntity = new HttpEntity(expense);
+        ResponseEntity<Expense> response = client.exchange(BASE_URL + expense.getId(), HttpMethod.PUT, requestEntity, Expense.class);
+        Expense updated = response.getBody();
+
+        assertThat(netWorth, equalTo(updated.getNetWorth()));
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
 
