@@ -1,10 +1,24 @@
 group 'co.pablobastidasv'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
+    }
+}
+
 allprojects {
 
     apply plugin: 'java'
     apply plugin: 'idea'
+
+    idea {
+        module {
+            inheritOutputDirs = false
+            outputDir = file("$buildDir/classes/main/")
+        }
+    }
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8

@@ -13,15 +13,26 @@ buildscript{
 
 apply plugin: 'spring-boot'
 
+repositories{
+    maven {
+        url "http://mavensync.zkoss.org/maven2"
+    }
+}
+
 jar{
     baseName = 'CxfJaxRs'
     version = '0.1.0'
+}
+
+configurations {
+    all*.exclude group: 'org.slf4j', module: 'slf4j-jdk14'
 }
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.data:spring-data-mongodb")
     compile("org.zkoss.zk:zkplus:8.0.0")
+    compile("org.zkoss.zk:zkbind:8.0.0")
     compile("org.zkoss.zk:zkspring-core:3.0")
     testCompile("org.springframework:spring-test:4.0.5.RELEASE")
 }
