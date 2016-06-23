@@ -10,7 +10,7 @@ import java.util.List;
  * Created by j.ortiz on 5/10/2016.
  */
 @Service
-public class ExpenseService {
+public class ExpenseCalculator {
 
     public BigDecimal computeExpenseTotal(List<Detail> details){
 

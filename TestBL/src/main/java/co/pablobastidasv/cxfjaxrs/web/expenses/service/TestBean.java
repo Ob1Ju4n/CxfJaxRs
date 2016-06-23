@@ -1,4 +1,4 @@
-package co.pablobastidasv.cxfjaxrs.web.service;
+package co.pablobastidasv.cxfjaxrs.web.expenses.service;
 
 import org.springframework.stereotype.Component;
 

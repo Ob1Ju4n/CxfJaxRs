@@ -1,4 +1,4 @@
-package co.pablobastidasv.cxfjaxrs.business.expenses.boundary.rest;
+package co.pablobastidasv.cxfjaxrs.business.expenses.boundary;
 
 import co.pablobastidasv.cxfjaxrs.business.expenses.control.common.ExpenseRepository;
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Expense;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/expenses")
-public class ExpenseRestBoundary {
+public class ExpenseRestService {
 
     @Autowired
     private ExpenseRepository repository;

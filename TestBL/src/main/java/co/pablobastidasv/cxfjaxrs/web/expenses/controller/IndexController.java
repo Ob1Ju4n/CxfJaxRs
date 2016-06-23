@@ -1,6 +1,6 @@
-package co.pablobastidasv.cxfjaxrs.web.controller;
+package co.pablobastidasv.cxfjaxrs.web.expenses.controller;
 
-import co.pablobastidasv.cxfjaxrs.web.service.TestBean;
+import co.pablobastidasv.cxfjaxrs.web.expenses.service.TestBean;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;

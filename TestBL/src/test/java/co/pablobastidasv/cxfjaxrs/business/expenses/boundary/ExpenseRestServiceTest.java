@@ -1,4 +1,4 @@
-package co.pablobastidasv.cxfjaxrs.business.expenses.boundary.rest;
+package co.pablobastidasv.cxfjaxrs.business.expenses.boundary;
 
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Detail;
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Expense;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +25,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by j.ortiz on 5/10/2016.
  */
-public class ExpenseRestBoundaryTest {
+public class ExpenseRestServiceTest {
 
     private int srvPort = 8080;
     final String BASE_URL = "http://localhost:" + srvPort + "/api/expenses/";
@@ -70,7 +69,7 @@ public class ExpenseRestBoundaryTest {
         shouldReturnExpenseWithGivenId(e1);
         shouldReturnAllExpenses(2);
         shouldUpdateExpense(BigDecimal.TEN);
-        shouldDeleteExpenses(e1,e2);
+        //shouldDeleteExpenses(e1,e2);
     }
 
     private void shouldCreateExpenses(Expense... args){

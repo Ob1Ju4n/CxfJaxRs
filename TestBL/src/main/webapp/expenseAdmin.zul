@@ -4,8 +4,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.zkoss.org/2005/zul"
         xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-    <toolbar>
-        <toolbarbutton id="addbtn" tooltiptext="Add new" iconSclass="z-icon-plus" sclass="toolbaritems" />
-        <toolbarbutton id="searchbtn" tooltiptext="Search" iconSclass="z-icon-search" sclass="toolbaritems" />
+    <toolbar sclass="toolbarMain">
+        <hbox style="float: right">
+            <toolbarbutton id="addbtn" tooltiptext="Add new" iconSclass="z-icon-plus" sclass="toolbaritems" />
+            <toolbarbutton id="searchbtn" tooltiptext="Search" iconSclass="z-icon-search" sclass="toolbaritems"/>
+        </hbox>
     </toolbar>
 </window>

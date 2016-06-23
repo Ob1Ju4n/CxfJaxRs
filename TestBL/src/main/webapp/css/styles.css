@@ -1,4 +1,12 @@
+.toolbarMain{
+    width: 100%;
+}
 .toolbaritems {
     width: 75px;
     text-align: center;
+    float: right;
+}
+
+.toolbaritems:hover{
+    box-shadow: 2px 2px 2px darkgrey;
 }
