@@ -1,12 +1,41 @@
-.toolbarMain{
+.ctmToolbar{
     width: 100%;
-}
-.toolbaritems {
-    width: 75px;
-    text-align: center;
-    float: right;
+    height:35px;
+    background-color: lightgray;
+    padding:5px;
 }
 
-.toolbaritems:hover{
+.ctmToolbarItem {
+    width: 5%;
+    text-align: center;
+}
+
+.ctmToolbarItem:hover{
     box-shadow: 2px 2px 2px darkgrey;
+}
+
+.ctmLeftColumn, .ctmRightColumn {
+    width: 50%;
+    margin:0 auto;
+}
+
+.ctmLeftColumn {
+    text-align: left;
+    float:left;
+}
+
+.ctmRightColumn {
+    text-align: right;
+    float:right;
+}
+
+.roundedInput {
+    width: 30%;
+    font-style: italic;
+    border-bottom-style: solid;
+    border-radius: 6px;
+}
+
+.ctmContent {
+
 }
