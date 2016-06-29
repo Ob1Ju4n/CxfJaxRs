@@ -6,6 +6,7 @@
         xmlns="http://www.zkoss.org/2005/zul"
         xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd"
         viewModel="@id('vm') @init('co.pablobastidasv.cxfjaxrs.web.expenses.vm.ExpenseManagementVM')" >
+    <script src="http://openexchangerates.github.io/money.js/money.min.js"></script>
     <div sclass="ctmToolbar">
         <div sclass="ctmLeftColumn">
             <button id="addBtn" tooltiptext="Add new" iconSclass="z-icon-plus" sclass="ctmToolbarItem"/>
@@ -16,6 +17,38 @@
         </div>
     </div>
     <div sclass="ctmContent">
-        <textbox id="foundTxt" value="@bind(vm.expenses)" style="width:100%"/>
+        <!-- <textbox id="foundTxt" value="@bind(vm.expenses)" style="width:100%"/> -->
+        <!-- <listbox id="expenseList" model="@bind(vm.expenses)" multiple="true" checkmark="true">
+            <listhead>
+                <listheader label="Expense Id"/>
+                <listheader label="Transfer Type"/>
+                <listheader label="Net Worth"/>
+                <listheader label="Total"/>
+            </listhead>
+            <template name="model">
+                <listitem>
+                    <listcell label="@load(each.id)"/>
+                    <listcell label="@load(each.transferType.transferName)"/>
+                    <listcell label="@load(each.netWorth)"/>
+                    <listcell label="@load(each.total)"/>
+                </listitem>
+            </template>
+        </listbox> -->
+        <grid model="@bind(vm.expenses)" emptyMessage="No items to display">
+            <columns>
+                <column label="Expense Id"/>
+                <column label="Transfer Type"/>
+                <column label="Net Worth"/>
+                <column label="Total"/>
+            </columns>
+            <template name="model">
+                <row>
+                    <label value="@load(each.id)"/>
+                    <label value="@load(each.transferType.transferName)"/>
+                    <label value="@load(each.netWorth)"/>
+                    <label value="@load(each.total)"/>
+                </row>
+            </template>
+        </grid>
     </div>
 </window>

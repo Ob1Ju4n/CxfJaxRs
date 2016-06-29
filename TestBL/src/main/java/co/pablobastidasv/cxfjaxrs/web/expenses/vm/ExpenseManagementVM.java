@@ -8,9 +8,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zkplus.spring.DelegatingVariableResolver;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.zkoss.zul.ListModelList;
 
 /**
  * Created by Juan on 6/24/2016.
@@ -22,7 +20,7 @@ public class ExpenseManagementVM {
     private ExpenseManagementService expenseManagementService;
 
     private String queryString;
-    private List<Expense> expenses;
+    private ListModelList<Expense> expenses;
     private Expense selected;
 
 
@@ -30,7 +28,7 @@ public class ExpenseManagementVM {
     public void init() {
 
         this.queryString = "";
-        this.expenses = new ArrayList<>();
+        this.expenses = new ListModelList<>();
     }
 
     @Command
@@ -39,7 +37,7 @@ public class ExpenseManagementVM {
 
         queryString = queryString.trim();
         if( queryString.isEmpty() ){
-            expenses = expenseManagementService.findAll();
+            expenses.addAll(expenseManagementService.findAll());
         }else {
             expenses.clear();
             expenses.add(expenseManagementService.findById(queryString));
@@ -55,11 +53,11 @@ public class ExpenseManagementVM {
         this.queryString = queryString;
     }
 
-    public List<Expense> getExpenses() {
+    public ListModelList<Expense> getExpenses() {
         return expenses;
     }
 
-    public void setExpenses(List<Expense> expenses) {
+    public void setExpenses(ListModelList<Expense> expenses) {
         this.expenses = expenses;
     }
 
