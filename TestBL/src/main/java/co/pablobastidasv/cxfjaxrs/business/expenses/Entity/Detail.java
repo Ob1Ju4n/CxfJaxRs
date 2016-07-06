@@ -9,11 +9,11 @@ public class Detail {
 
     private String id;
     private String description;
-    private BigDecimal value;
+    private Money value;
 
     public Detail(){}
 
-    public Detail(String description, BigDecimal value){
+    public Detail(String description, Money value){
 
         this.description = description;
         this.value = value;
@@ -35,11 +35,11 @@ public class Detail {
         this.description = description;
     }
 
-    public BigDecimal getValue() {
+    public Money getValue() {
         return value;
     }
 
-    public void setValue(BigDecimal value) {
+    public void setValue(Money value) {
         this.value = value;
     }
 }

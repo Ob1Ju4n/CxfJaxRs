@@ -18,8 +18,8 @@ public class Expense {
     private String id;
     private TransferType transferType;
     private List<Detail> details;
-    private BigDecimal netWorth;
-    private BigDecimal total;
+    private Money netWorth;
+    private Money total;
     private Date creationDate;
     //TODO: Include attachment property
 
@@ -48,11 +48,11 @@ public class Expense {
         return details;
     }
 
-    public BigDecimal getNetWorth() {
+    public Money getNetWorth() {
         return netWorth;
     }
 
-    public BigDecimal getTotal() {
+    public Money getTotal() {
         return total;
     }
 
@@ -65,8 +65,8 @@ public class Expense {
         private String id;
         private TransferType transferType;
         private List<Detail> details;
-        private BigDecimal netWorth;
-        private BigDecimal total;
+        private Money netWorth;
+        private Money total;
         private Date creationDate;
 
         public Builder(){
@@ -93,14 +93,14 @@ public class Expense {
             return this;
         }
 
-        public Builder netWorth(BigDecimal value){
+        public Builder netWorth(Money value){
 
             netWorth = value;
             return this;
         }
 
 
-        public Builder total(BigDecimal value){
+        public Builder total(Money value){
 
             total = value;
             return this;

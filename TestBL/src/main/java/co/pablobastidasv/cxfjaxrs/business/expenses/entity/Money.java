@@ -3,6 +3,7 @@ package co.pablobastidasv.cxfjaxrs.business.expenses.entity;
 import org.springframework.data.annotation.Transient;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
@@ -18,22 +19,17 @@ public class Money {
     @Transient
     private String displayValue;
 
-    public Money(){
-        this.locale = Locale.getDefault();
-    }
-
-    public Money(BigDecimal amount) {
-        this.amount = amount;
-    }
+    public Money(){}
 
     public Money(Locale locale) {
         this.locale = locale;
     }
 
-    public Money(BigDecimal amount, Locale locale) {
+    public Money(BigDecimal amount) {
 
+        this(Locale.getDefault());
         this.amount = amount;
-        this.locale = locale;
+        this.setDisplayValueForLocale();
     }
 
     public BigDecimal getAmount() {
@@ -49,6 +45,15 @@ public class Money {
     }
 
     public String getDisplayValue() {
-        return displayValue;
+        return this.displayValue;
     }
+
+    public void setDisplayValueForLocale(){
+        this.displayValue = NumberFormat.getCurrencyInstance(this.locale).format(this.getAmount());
+    }
+
+    public void setDisplayValueForLocale(Locale locale, Double conversionRate){
+        this.displayValue = NumberFormat.getCurrencyInstance(locale).format(this.getAmount().multiply(new BigDecimal(conversionRate)));
+    }
+
 }

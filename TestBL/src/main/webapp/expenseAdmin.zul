@@ -45,8 +45,8 @@
                 <row>
                     <label value="@load(each.id)"/>
                     <label value="@load(each.transferType.transferName)"/>
-                    <label value="@load(each.netWorth)"/>
-                    <label value="@load(each.total)"/>
+                    <label value="@load(each.netWorth.displayValue)"/>
+                    <label value="@load(each.total.displayValue)"/>
                 </row>
             </template>
         </grid>

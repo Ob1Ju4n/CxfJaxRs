@@ -22,6 +22,7 @@ public class ExpenseManagementVM {
     private String queryString;
     private ListModelList<Expense> expenses;
     private Expense selected;
+    private String rateCode;
 
 
     @Init
@@ -36,12 +37,19 @@ public class ExpenseManagementVM {
     public void search(){
 
         queryString = queryString.trim();
+
         if( queryString.isEmpty() ){
             expenses.addAll(expenseManagementService.findAll());
         }else {
             expenses.clear();
             expenses.add(expenseManagementService.findById(queryString));
         }
+
+    }
+
+    @Command
+    @NotifyChange("expenses")
+    public void changeRates(){
 
     }
 
@@ -67,6 +75,14 @@ public class ExpenseManagementVM {
 
     public void setSelected(Expense selected) {
         this.selected = selected;
+    }
+
+    public String getRateCode() {
+        return rateCode;
+    }
+
+    public void setRateCode(String rateCode) {
+        this.rateCode = rateCode;
     }
 
     public ExpenseManagementService getExpenseManagementService() {
