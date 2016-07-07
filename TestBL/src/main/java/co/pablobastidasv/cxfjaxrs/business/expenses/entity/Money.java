@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Transient;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.Locale;
 
 /**
@@ -19,17 +20,24 @@ public class Money {
     @Transient
     private String displayValue;
 
-    public Money(){}
+    @Transient
+    private Double conversionRate;
+
+    public Money(){
+        this.conversionRate = 1D;
+        this.locale = Locale.getDefault();
+    }
 
     public Money(Locale locale) {
+
+        this();
         this.locale = locale;
     }
 
-    public Money(BigDecimal amount) {
+    public Money(String amount) {
 
-        this(Locale.getDefault());
-        this.amount = amount;
-        this.setDisplayValueForLocale();
+        this();
+        this.amount = new BigDecimal(amount);
     }
 
     public BigDecimal getAmount() {
@@ -45,15 +53,21 @@ public class Money {
     }
 
     public String getDisplayValue() {
+
+        this.displayValue = NumberFormat.getCurrencyInstance(this.locale).format(this.getAmount().multiply(new BigDecimal(this.conversionRate)));
         return this.displayValue;
     }
 
-    public void setDisplayValueForLocale(){
-        this.displayValue = NumberFormat.getCurrencyInstance(this.locale).format(this.getAmount());
+    public void resetMoneyConfiguration(){
+
+        this.conversionRate = 1D;
+        this.locale = Locale.getDefault();
     }
 
-    public void setDisplayValueForLocale(Locale locale, Double conversionRate){
-        this.displayValue = NumberFormat.getCurrencyInstance(locale).format(this.getAmount().multiply(new BigDecimal(conversionRate)));
+    public void setupMoneyConfiguration(Locale locale, Double conversionRate){
+
+        this.conversionRate = conversionRate;
+        this.locale = locale;
     }
 
 }

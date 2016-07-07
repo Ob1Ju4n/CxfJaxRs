@@ -2,6 +2,7 @@ package co.pablobastidasv.cxfjaxrs.business.expenses.boundary;
 
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Detail;
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Expense;
+import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Money;
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.TransferType;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,24 +41,24 @@ public class ExpenseRestServiceTest {
         client = new TestRestTemplate();
 
         details = Arrays.asList(
-                new Detail("Pago cuenta cobro comisiones", new BigDecimal("1335600")),
-                new Detail("Retencion en la fuente 10%", new BigDecimal("150000")),
-                new Detail("Retencion de ICA 9.66", new BigDecimal("14400"))
+                new Detail("Pago cuenta cobro comisiones", new Money("1335600")),
+                new Detail("Retencion en la fuente 10%", new Money("150000")),
+                new Detail("Retencion de ICA 9.66", new Money("14400"))
         );
 
         e1 = new Expense.Builder().
                 id("1").
                 details(details).
-                netWorth(new BigDecimal("1335600")).
-                total(new BigDecimal("1500000")).
+                netWorth(new Money("1335600")).
+                total(new Money("1500000")).
                 transferType(new TransferType("CSH","Cash")).
                 build();
 
         e2 = new Expense.Builder().
                 id("2").
                 details(details).
-                netWorth(new BigDecimal("1335600")).
-                total(new BigDecimal("1500000")).
+                netWorth(new Money("1335600")).
+                total(new Money("1500000")).
                 transferType(new TransferType("CRC","Credit Card")).
                 build();
     }
@@ -68,7 +69,7 @@ public class ExpenseRestServiceTest {
         shouldCreateExpenses(e1, e2);
         shouldReturnExpenseWithGivenId(e1);
         shouldReturnAllExpenses(2);
-        shouldUpdateExpense(BigDecimal.TEN);
+        shouldUpdateExpense(new Money("10"));
         //shouldDeleteExpenses(e1,e2);
     }
 
@@ -105,7 +106,7 @@ public class ExpenseRestServiceTest {
         assertThat(found.size(), equalTo(total));
     }
 
-    public void shouldUpdateExpense(BigDecimal netWorth){
+    public void shouldUpdateExpense(Money netWorth){
 
         Expense expense = new Expense.Builder().
                 id("1").

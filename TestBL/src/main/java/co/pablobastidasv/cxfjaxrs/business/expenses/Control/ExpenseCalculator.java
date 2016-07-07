@@ -14,7 +14,7 @@ public class ExpenseCalculator {
 
     public BigDecimal computeExpenseTotal(List<Detail> details){
 
-        BigDecimal total = BigDecimal.ZERO;
+        /*BigDecimal total = BigDecimal.ZERO;
         if( !details.isEmpty() ){
 
             for(Detail detail: details){
@@ -22,7 +22,8 @@ public class ExpenseCalculator {
             }
         }
 
-        return total;
+        return total;*/
+        return null;
     }
 
 }

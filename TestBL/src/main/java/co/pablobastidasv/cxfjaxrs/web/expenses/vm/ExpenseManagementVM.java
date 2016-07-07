@@ -10,6 +10,9 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zkplus.spring.DelegatingVariableResolver;
 import org.zkoss.zul.ListModelList;
 
+import java.util.Currency;
+import java.util.Locale;
+
 /**
  * Created by Juan on 6/24/2016.
  */
@@ -21,7 +24,9 @@ public class ExpenseManagementVM {
 
     private String queryString;
     private ListModelList<Expense> expenses;
-    private Expense selected;
+    private ListModelList<Currency> currencies;
+    private Expense selectedExpense;
+    private Currency selectedCurrency;
     private String rateCode;
 
 
@@ -30,6 +35,7 @@ public class ExpenseManagementVM {
 
         this.queryString = "";
         this.expenses = new ListModelList<>();
+        this.currencies = new ListModelList<>(Currency.getAvailableCurrencies());
     }
 
     @Command
@@ -51,6 +57,19 @@ public class ExpenseManagementVM {
     @NotifyChange("expenses")
     public void changeRates(){
 
+        if( selectedCurrency.equals(Currency.getInstance(Locale.getDefault())) && !expenses.isEmpty()){
+
+            expenses.forEach( (v) -> v.getNetWorth().resetMoneyConfiguration());
+            expenses.forEach( (v) -> v.getTotal().resetMoneyConfiguration());
+        }else{
+
+            //TODO: Get conversion rate from endpoint
+            //For now suppose the ISO4217 for Japan
+            Locale conversionLocale = new Locale(selectedCurrency.getCurrencyCode().substring(0,2));
+            Double conversionRate = 0.0337;
+            expenses.forEach( (v) -> v.getNetWorth().setupMoneyConfiguration(conversionLocale, conversionRate));
+            expenses.forEach( (v) -> v.getTotal().setupMoneyConfiguration(conversionLocale, conversionRate));
+        }
     }
 
     public String getQueryString() {
@@ -69,12 +88,12 @@ public class ExpenseManagementVM {
         this.expenses = expenses;
     }
 
-    public Expense getSelected() {
-        return selected;
+    public Expense getSelectedExpense() {
+        return selectedExpense;
     }
 
-    public void setSelected(Expense selected) {
-        this.selected = selected;
+    public void setSelectedExpense(Expense selectedExpense) {
+        this.selectedExpense = selectedExpense;
     }
 
     public String getRateCode() {
