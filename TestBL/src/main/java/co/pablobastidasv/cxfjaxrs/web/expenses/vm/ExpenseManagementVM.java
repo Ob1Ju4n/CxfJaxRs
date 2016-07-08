@@ -2,6 +2,7 @@ package co.pablobastidasv.cxfjaxrs.web.expenses.vm;
 
 import co.pablobastidasv.cxfjaxrs.business.expenses.entity.Expense;
 import co.pablobastidasv.cxfjaxrs.web.expenses.service.ExpenseManagementService;
+import co.pablobastidasv.cxfjaxrs.web.expenses.service.MoneyManagementService;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -21,6 +22,9 @@ public class ExpenseManagementVM {
 
     @WireVariable("expenseManagementService")
     private ExpenseManagementService expenseManagementService;
+
+    @WireVariable
+    private MoneyManagementService moneyManagementService;
 
     private String queryString;
     private ListModelList<Expense> expenses;
@@ -55,7 +59,7 @@ public class ExpenseManagementVM {
 
     @Command
     @NotifyChange("expenses")
-    public void changeRates(){
+    public void changeRates() throws Exception {
 
         if( selectedCurrency.equals(Currency.getInstance(Locale.getDefault())) && !expenses.isEmpty()){
 
@@ -63,10 +67,11 @@ public class ExpenseManagementVM {
             expenses.forEach( (v) -> v.getTotal().resetMoneyConfiguration());
         }else{
 
-            //TODO: Get conversion rate from endpoint
-            //For now suppose the ISO4217 for Japan
             Locale conversionLocale = new Locale(selectedCurrency.getCurrencyCode().substring(0,2));
-            Double conversionRate = 0.0337;
+            Double conversionRate = moneyManagementService.findConversionRate(
+                    Currency.getInstance(Locale.getDefault()).getCurrencyCode(),
+                    selectedCurrency.getCurrencyCode()
+            );
             expenses.forEach( (v) -> v.getNetWorth().setupMoneyConfiguration(conversionLocale, conversionRate));
             expenses.forEach( (v) -> v.getTotal().setupMoneyConfiguration(conversionLocale, conversionRate));
         }
@@ -110,5 +115,13 @@ public class ExpenseManagementVM {
 
     public void setExpenseManagementService(ExpenseManagementService expenseManagementService) {
         this.expenseManagementService = expenseManagementService;
+    }
+
+    public MoneyManagementService getMoneyManagementService() {
+        return moneyManagementService;
+    }
+
+    public void setMoneyManagementService(MoneyManagementService moneyManagementService) {
+        this.moneyManagementService = moneyManagementService;
     }
 }

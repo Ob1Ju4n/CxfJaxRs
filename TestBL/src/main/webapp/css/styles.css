@@ -1,6 +1,6 @@
 .ctmToolbar{
     width: 100%;
-    height: 3.5%;
+    height: 35px;
     background-color: lightgray;
     padding:5px;
 }
@@ -39,4 +39,12 @@
 .ctmContent {
     width: 100%;
     height: 75%;
+}
+
+.numValue {
+    text-align: right;
+}
+
+.txtValue {
+    text-align: center;
 }

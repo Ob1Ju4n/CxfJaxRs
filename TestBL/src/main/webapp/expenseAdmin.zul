@@ -14,6 +14,11 @@
         <div sclass="ctmRightColumn">
             <textbox id="searchTxt" value="@bind(vm.queryString)" placeholder="#expense ID" sclass="roundedInput"/>
             <button id="searchBtn" tooltiptext="Search" iconSclass="z-icon-search"  sclass="ctmToolbarItem" onClick="@command('search')"/>
+            <selectbox id="rateSelectbox" >
+                <template name="model">
+                    <label value=""/>
+                </template>
+            </selectbox>
         </div>
     </div>
     <div sclass="ctmContent">
@@ -35,7 +40,7 @@
             </template>
         </listbox> -->
         <grid model="@bind(vm.expenses)" emptyMessage="No items to display">
-            <columns>
+            <columns style="text-align: center">
                 <column label="Expense Id"/>
                 <column label="Transfer Type"/>
                 <column label="Net Worth"/>
@@ -43,10 +48,18 @@
             </columns>
             <template name="model">
                 <row>
-                    <label value="@load(each.id)"/>
-                    <label value="@load(each.transferType.transferName)"/>
-                    <label value="@load(each.netWorth.displayValue)"/>
-                    <label value="@load(each.total.displayValue)"/>
+                    <cell sclass="numValue">
+                        <label value="@load(each.id)"/>
+                    </cell>
+                    <cell sclass="txtValue">
+                        <label value="@load(each.transferType.transferName)"/>
+                    </cell>
+                    <cell sclass="numValue">
+                        <label value="@load(each.netWorth.displayValue)"/>
+                    </cell>
+                    <cell sclass="numValue">
+                        <label value="@load(each.total.displayValue)"/>
+                    </cell>
                 </row>
             </template>
         </grid>
