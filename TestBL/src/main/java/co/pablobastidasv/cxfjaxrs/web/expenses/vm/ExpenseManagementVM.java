@@ -6,13 +6,13 @@ import co.pablobastidasv.cxfjaxrs.web.expenses.service.MoneyManagementService;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zkplus.spring.DelegatingVariableResolver;
 import org.zkoss.zul.ListModelList;
 
-import java.util.Currency;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Created by Juan on 6/24/2016.
@@ -30,7 +30,6 @@ public class ExpenseManagementVM {
     private ListModelList<Expense> expenses;
     private ListModelList<Currency> currencies;
     private Expense selectedExpense;
-    private Currency selectedCurrency;
     private String rateCode;
 
 
@@ -40,18 +39,25 @@ public class ExpenseManagementVM {
         this.queryString = "";
         this.expenses = new ListModelList<>();
         this.currencies = new ListModelList<>(Currency.getAvailableCurrencies());
+        this.currencies.sort(new Comparator<Currency>() {
+            @Override
+            public int compare(Currency o1, Currency o2) {
+                return o1.getCurrencyCode().compareTo(o2.getCurrencyCode());
+            }
+        });
+        this.currencies.addToSelection(Currency.getInstance(Locale.getDefault()));
     }
 
     @Command
     @NotifyChange("expenses")
     public void search(){
 
+        expenses.clear();
         queryString = queryString.trim();
 
         if( queryString.isEmpty() ){
             expenses.addAll(expenseManagementService.findAll());
         }else {
-            expenses.clear();
             expenses.add(expenseManagementService.findById(queryString));
         }
 
@@ -61,19 +67,21 @@ public class ExpenseManagementVM {
     @NotifyChange("expenses")
     public void changeRates() throws Exception {
 
+        Set<Currency> currencySet = this.currencies.getSelection();
+        Currency selectedCurrency = currencySet.iterator().next();
+
         if( selectedCurrency.equals(Currency.getInstance(Locale.getDefault())) && !expenses.isEmpty()){
 
             expenses.forEach( (v) -> v.getNetWorth().resetMoneyConfiguration());
             expenses.forEach( (v) -> v.getTotal().resetMoneyConfiguration());
         }else{
 
-            Locale conversionLocale = new Locale(selectedCurrency.getCurrencyCode().substring(0,2));
             Double conversionRate = moneyManagementService.findConversionRate(
                     Currency.getInstance(Locale.getDefault()).getCurrencyCode(),
                     selectedCurrency.getCurrencyCode()
             );
-            expenses.forEach( (v) -> v.getNetWorth().setupMoneyConfiguration(conversionLocale, conversionRate));
-            expenses.forEach( (v) -> v.getTotal().setupMoneyConfiguration(conversionLocale, conversionRate));
+            expenses.forEach( (v) -> v.getNetWorth().setupMoneyConfiguration(selectedCurrency, conversionRate));
+            expenses.forEach( (v) -> v.getTotal().setupMoneyConfiguration(selectedCurrency, conversionRate));
         }
     }
 
@@ -123,5 +131,13 @@ public class ExpenseManagementVM {
 
     public void setMoneyManagementService(MoneyManagementService moneyManagementService) {
         this.moneyManagementService = moneyManagementService;
+    }
+
+    public ListModelList<Currency> getCurrencies() {
+        return currencies;
+    }
+
+    public void setCurrencies(ListModelList<Currency> currencies) {
+        this.currencies = currencies;
     }
 }

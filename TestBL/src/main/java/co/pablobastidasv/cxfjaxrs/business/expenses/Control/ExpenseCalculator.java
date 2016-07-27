@@ -14,16 +14,14 @@ public class ExpenseCalculator {
 
     public BigDecimal computeExpenseTotal(List<Detail> details){
 
-        /*BigDecimal total = BigDecimal.ZERO;
+        BigDecimal total = BigDecimal.ZERO;
         if( !details.isEmpty() ){
 
             for(Detail detail: details){
-                total = total.add(detail.getValue());
+                total = total.add(detail.getValue().getAmount());
             }
         }
 
-        return total;*/
-        return null;
+        return total;
     }
-
 }

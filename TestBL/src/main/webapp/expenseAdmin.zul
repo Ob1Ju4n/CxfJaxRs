@@ -1,3 +1,4 @@
+<?meta http-equiv="Content-type" content="text/html;charset=UTF-8" ?>
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <?link href="css/styles.css" rel="stylesheet"?>
 <window border="normal" title="Expense Management" vflex="1"
@@ -14,9 +15,9 @@
         <div sclass="ctmRightColumn">
             <textbox id="searchTxt" value="@bind(vm.queryString)" placeholder="#expense ID" sclass="roundedInput"/>
             <button id="searchBtn" tooltiptext="Search" iconSclass="z-icon-search"  sclass="ctmToolbarItem" onClick="@command('search')"/>
-            <selectbox id="rateSelectbox" >
+            <selectbox id="rateSelectbox" model="@bind(vm.currencies)" onSelect="@command('changeRates')">
                 <template name="model">
-                    <label value=""/>
+                    <label value="${each.currencyCode}"/>
                 </template>
             </selectbox>
         </div>

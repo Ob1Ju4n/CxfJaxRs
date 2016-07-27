@@ -111,13 +111,14 @@ public class ExpenseRestServiceTest {
         Expense expense = new Expense.Builder().
                 id("1").
                 netWorth(netWorth).
+                total(netWorth).
                 build();
 
         HttpEntity<Expense> requestEntity = new HttpEntity(expense);
         ResponseEntity<Expense> response = client.exchange(BASE_URL + expense.getId(), HttpMethod.PUT, requestEntity, Expense.class);
         Expense updated = response.getBody();
 
-        assertThat(netWorth, equalTo(updated.getNetWorth()));
+        assertThat(netWorth.getAmount(), equalTo(updated.getNetWorth().getAmount()));
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
